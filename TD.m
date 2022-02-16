@@ -1,5 +1,4 @@
-function results = TD(x,O,T)
-    
+function results = TD(x, O, T)
     % TD learning for partially observable MDP.
     % Author: Dr. Samuel J. Gershman
     %
@@ -41,7 +40,7 @@ function results = TD(x,O,T)
         
         % store results
         results.w(t,:) = w0;
-        results.b(t,:) = b0;
+        results.B(t,:) = b0;
         results.rpe(t,1) = rpe;
         results.value(t,1) = w'*(b0); %estimated value
 %         randcolor = rand;
@@ -52,3 +51,6 @@ function results = TD(x,O,T)
 %         plot(sum(T.*squeeze(O(:,:,x(t)))),'Color',[1-randcolor randcolor 1-randcolor])
 %         hold on
     end
+    results.b0 = b0;
+end
+

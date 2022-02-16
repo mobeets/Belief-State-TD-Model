@@ -152,10 +152,12 @@ results = TD(x,O,T);
 
 %% plot RPE as a function of ISI; plot every trial
 
+plot.init;
+firstTrial = length(find(x==3))*0.4;
 RewardIndices=find(x==3);
-RewardIndices=RewardIndices(length(RewardIndices)*0.4:end); % only look at trials after 2000 trials
+RewardIndices=RewardIndices(firstTrial:end); % only look at trials after 2000 trials
 ISIdistributionMatrix_rewardedtrials=ISIdistributionMatrix(~isnan(ISIdistributionMatrix));
-ISIsforplot=ISIdistributionMatrix_rewardedtrials(length(ISIdistributionMatrix_rewardedtrials)*0.4:end); % only look at trials after 2000 trials
+ISIsforplot=ISIdistributionMatrix_rewardedtrials(firstTrial:end); % only look at trials after 2000 trials
 
 plot(ISIsforplot,results.rpe(RewardIndices),'k*')
 xlabel('ISI')
@@ -172,10 +174,11 @@ for i=1:9
 end
 
 % Plotting average RPE and standard error for each ISI
+% plot.init;
 for i=1:9
-    errorbar(i, averageRPE(i), errorRPE(i),'k')
+    errorbar(4+i, averageRPE(i), errorRPE(i),'k')
     hold on
-    plot(i, averageRPE(i), '.','Color',[1-i*.1 i*.1 1],'markersize',25)
+    plot(4+i, averageRPE(i), '.','Color',[1-i*.1 i*.1 1],'markersize',25)
     hold on
 end
 
@@ -183,6 +186,7 @@ xlabel('time of reward delivery','fontSize',20)
 ylabel('Average TD error','fontSize',20)
 %% Value, valueprime, and RPE
 %Code for value signals and RPEs shown in Figure 6
+plot.init;
 clear cueonsets;
     cueonsets=find(x==2);
     whichISI=13; %how long is the ISI for the trial type that you want to plot the value signal for? range: 5-13

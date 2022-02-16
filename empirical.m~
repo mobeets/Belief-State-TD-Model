@@ -1,0 +1,39 @@
+%% make experiment
+
+nTrials = 1000;
+pOmission = 0.1;
+info = getExperiment(pOmission);
+trials = makeTrials(nTrials, info.pOmission, info.ITIhazard, ...
+    info.ISIcdf, info.firstRewardIndex);
+
+%% TD learning
+
+x = trials.x;
+results = TD(trials.x, info.O, info.T);
+
+%% Monte Carlo
+
+gamma = 0.98;
+[w, B, g] = monteCarloWeights(trials.x, info.O, info.T, gamma);
+
+%% plot value
+
+w = results.w(end,:)';
+
+V = circshift(w, 1);
+Vprev = w;
+
+plot.init;
+plot.subplot(1,2,1);
+plot(V);
+plot(Vprev);
+xlabel('time');
+ylabel('value');
+
+plot.subplot(1,2,2);
+rs = nan(15,1); rs(5:14) = 1;
+rpe = rs + gamma*Vprev - V;
+plot(rpe, 'o');
+xlabel('time');
+ylabel('rpe');
+plot.setPrintSize(gcf, struct('width', 7, 'height', 3));
