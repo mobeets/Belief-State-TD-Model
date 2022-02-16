@@ -36,6 +36,7 @@ function results = monteCarloWeights(x, O, T, gamma, doSim)
     results.b0 = b0; % initial belief
     results.B = B; % beliefs
     results.g = g; % returns
+    results.gamma = gamma;
     if doSim
         [results.rpe, results.value] = FixedWeights(x, w, B, gamma, b0);
     end
