@@ -1,10 +1,10 @@
 %% make experiment
 
 nTrials = 1000;
-pOmission = 0.1;
-% ITIhazard = 1/(13 / 0.2);
-ITIhazard = 1/4;
-minITI = 3;
+pOmission = 0.0;
+ITIhazard = 1/(13 / 0.2);
+% ITIhazard = 1/4;
+minITI = 20;
 omissionsHaveImaginaryISI = true;
 info = getExperiment(pOmission, ITIhazard);
 trials = makeTrials(nTrials, info.pOmission, info.ITIhazard, ...
@@ -38,7 +38,7 @@ plot.setPrintSize(gcf, struct('width', 5, 'height', 4.7));
 x = trials.x; O = info.O; T = info.T;
 results_td = TD(x, O, T);
 
-%% Monte Carlo
+%% TD Least Squares
 
 gamma = 0.98;
 % info = getExperiment(0.1);
@@ -62,15 +62,14 @@ results_mc.info = info;
 
 %% plot value and rpes
 
-% results = results_base; nm = 'Monte Carlo';
-results = results_mc; nm = 'TD-LS';
+results = results_mc; nm = 'Task 1 (TD-LS)';
 
 info = results.info;
 gamma = results.gamma;
 
 w = results.w;
 
-plot.init;
+% plot.init;
 plotValueAndRpes(w, info, gamma);
 title(nm);
 

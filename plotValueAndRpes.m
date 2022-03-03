@@ -52,7 +52,8 @@ function plotValueAndRpes(w, info, gamma, O, T, rpe_linestyle)
     xlim([0 xmx]);
 
     plot.subplot(nrows, ncols, c); c = c + 1;
-    plot(rpes(1:end-1,:)', rpe_linestyle);%, 'Color', h.Color);
+%     plot(rpes(1:end-1,:)', rpe_linestyle);%, 'Color', h.Color);
+    plot(rpes(1:end-1,:)', rpe_linestyle, 'Color', h.Color);
     xlabel('time');
     ylabel('rpe');
     axis tight;
