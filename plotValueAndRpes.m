@@ -1,15 +1,24 @@
-function plotValueAndRpes(w, info, gamma, O, T)
+function plotValueAndRpes(w, info, gamma, O, T, rpe_linestyle)
     if nargin < 4
         O = info.O;
     end
     if nargin < 5
         T = info.T;
     end
+    if nargin < 6
+        rpe_linestyle = '-';
+    end
     xmx = 22;
 
     test_trials = makeTrials(0, info.pOmission, info.ITIhazard, ...
         info.ISIcdf, info.firstRewardIndex);
-    [B, b0] = getBeliefs(test_trials.x, O, T);
+    if ~isempty(O) && ~isempty(T)
+        [B, b0] = getBeliefs(test_trials.x, O, T);
+    else
+        B = CSC(test_trials.x, 15); b0 = zeros(size(B,2),1);
+        warning('Using CSC instead of beliefs.');
+    end
+    
     [rpe, value] = FixedWeights(test_trials.x, w, B, gamma, b0);
 
     trialStarts = find(test_trials.x == 2);
@@ -43,7 +52,7 @@ function plotValueAndRpes(w, info, gamma, O, T)
     xlim([0 xmx]);
 
     plot.subplot(nrows, ncols, c); c = c + 1;
-    plot(rpes', '.', 'Color', h.Color);
+    plot(rpes(1:end-1,:)', rpe_linestyle);%, 'Color', h.Color);
     xlabel('time');
     ylabel('rpe');
     axis tight;

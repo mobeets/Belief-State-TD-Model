@@ -14,7 +14,7 @@ function info = getExperiment(pOmission, ITIhazard, cue)
     if cue == 1
         r_times = [1.2 1.4 1.6 1.8 2 2.2 2.4 2.6 2.8];
         ps = normpdf(r_times, 2, 0.5);
-        ISIpdf = ps/sum(ps);        
+        ISIpdf = ps/sum(ps);
         firstRewardIndex = 5;
     elseif cue == 2
         ISIpdf = 1;
